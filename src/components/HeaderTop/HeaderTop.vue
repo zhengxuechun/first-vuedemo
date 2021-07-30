@@ -11,6 +11,7 @@
 
 <script>
 //组件接收一个属性需要在此声明
+
 export default {
     props:{
         title:String

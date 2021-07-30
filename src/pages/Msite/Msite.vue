@@ -50,16 +50,8 @@ import ShopList from "../../components/ShopList/ShopList.vue"
 
 export default {  
   watch:{
-    categorys(value){      
-  //     setTimeout(()=>{
-  //    new Swiper('.swiper-container', {
-  //   loop:true,//可以循环轮播
-  //    pagination: {
-  //     el: '.swiper-pagination',
-  //    },
-  //   })
-  // },100)
-    this.$nextTick(()=>{
+    categorys(value){   
+      this.$nextTick(()=>{
        //创建一个swiper实例对象实现轮播
     new Swiper('.swiper-container', {
     loop:true,//可以循环轮播
@@ -77,16 +69,9 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getCategorys')
+    this.$store.dispatch('getCategorys'),
+    this.$store.dispatch('getShops')
 
-
-    //创建一个swiper实例对象实现轮播
-    // new Swiper('.swiper-container', {
-    // loop:true,//可以循环轮播
-    //  pagination: {
-    //   el: '.swiper-pagination',
-    //  },
-    // })
   },
 
   computed:{

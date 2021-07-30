@@ -12,7 +12,7 @@
 
   export default {
 
-    mounted () {
+    async mounted () {
       // this.$store.dispatch('getAddress')
       this.getAddress()
     },

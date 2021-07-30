@@ -8,8 +8,18 @@
 
 <script>
 import FooterGuideVue from "vue/vuedemo/src/components/FooterGuide/FooterGuide.vue"
+// //引入接口函数
+// import {reqFoodTypes} from './api' 可以不用 之前作为测试使用
 
 export default {
+  // async mounted() {
+  //   // //执行接口函数（测试接口）
+  //   // const result = await reqFoodTypes()
+  //   // console.log(result) 仅仅是做一个测试用
+  // },
+  mounted() {
+    this.$store.dispatch('getAddress')// APP中发送了一起请求获取address
+  },  
   components:{
     FooterGuideVue
   }

@@ -16,9 +16,9 @@
               <div class="swiper-slide" v-for="(categorys,index) in categorysArr" :key="index">
                 <a href="javascript:" class="link_to_food " v-for="(category,index) in categorys" :key="index">
                   <div class="food_container">
-                    <img src="./images/nav/1.jpg">
+                    <img :src="baseImageUrl+category.image_url">
                   </div>
-                  <span>甜品饮品</span>
+                  <span>{{category.title}}</span>
                 </a>
               </div>
 >
@@ -49,17 +49,44 @@ import ShopList from "../../components/ShopList/ShopList.vue"
 
 
 export default {  
-  mounted() {
-    this.$store.dispatch('getCategorys')
-
-
-    //创建一个swiper实例对象实现轮播
+  watch:{
+    categorys(value){      
+  //     setTimeout(()=>{
+  //    new Swiper('.swiper-container', {
+  //   loop:true,//可以循环轮播
+  //    pagination: {
+  //     el: '.swiper-pagination',
+  //    },
+  //   })
+  // },100)
+    this.$nextTick(()=>{
+       //创建一个swiper实例对象实现轮播
     new Swiper('.swiper-container', {
     loop:true,//可以循环轮播
      pagination: {
       el: '.swiper-pagination',
      },
     })
+  })
+    }
+  },
+  
+  data() {
+    return {
+      baseImageUrl:'https://fuss10.elemecdn.com'
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getCategorys')
+
+
+    //创建一个swiper实例对象实现轮播
+    // new Swiper('.swiper-container', {
+    // loop:true,//可以循环轮播
+    //  pagination: {
+    //   el: '.swiper-pagination',
+    //  },
+    // })
   },
 
   computed:{

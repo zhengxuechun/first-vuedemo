@@ -2,7 +2,7 @@
   <div id="app">
     <!--此处是为了将router中的页面渲染到首页面上，也就是登录以后看到的内容-->
     <router-view/>
-   <FooterGuideVue v-show="$route.meta.showFooter"/>
+    <FooterGuide v-show="$route.meta.showFooter"/>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 
   export default {
 
-    async mounted () {
+    mounted () {
       // this.$store.dispatch('getAddress')
       this.getAddress()
     },

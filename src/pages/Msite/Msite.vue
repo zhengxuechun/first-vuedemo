@@ -9,17 +9,19 @@
             <span class="header_login_text">登录|注册</span>
           </span>
         </HeaderTop>
-        <!--首页导航-->
+       <!--首页导航-->
         <nav class="msite_nav">
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="(categorys,index) in categorysArr" :key="index">
-                <a href="javascript:" class="link_to_food" v-for="(category,index) in categorys" :key="index">
+                <a href="javascript:" class="link_to_food " v-for="(category,index) in categorys" :key="index">
                   <div class="food_container">
                     <img src="./images/nav/1.jpg">
-                  </div>        
+                  </div>
+                  <span>甜品饮品</span>
                 </a>
               </div>
+>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
@@ -37,16 +39,20 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 import HeaderTop from "../../components/HeaderTop/HeaderTop.vue"
 import ShopList from "../../components/ShopList/ShopList.vue"
-import {mapState} from 'vuex'
+
 
 
 export default {  
   mounted() {
+    this.$store.dispatch('getCategorys')
+
+
     //创建一个swiper实例对象实现轮播
     new Swiper('.swiper-container', {
     loop:true,//可以循环轮播
@@ -55,37 +61,31 @@ export default {
      },
     })
   },
-  mounted () {
-      this.$store.dispatch('getCategorys')
-    },
+
   computed:{
       ...mapState(['address','categorys']),
-    /*
-    根据categorys一维数组生成一个2维数组
-    小数组中的元素个数最大是8
-    */
-    // categorysArr () {
-    //   // 1.先从当前组件中得到所有食品分类的一维数组
-    //   const {categorys} = this
-    //   // 2.准备一个空的二维数组--categorysArr
-    //   const arr = []
-    //   // 3.准备一个小数组--pages(最大长度为8)
-    //   let minArr = []
-    //   // 4.遍历categorys得到处理后的二维数组catagorysArr
-    //   categorys.forEach(data => {
-    //     // 如果当前小数组(pages)已经满了, 创建一个新的
-    //     if (minArr.length === 8) {
-    //       minArr = []
-    //     }
-    //     // 如果minArr是空的, 将小数组(pages)保存到大数组(categorysArr)中
-    //     if (minArr.length === 0) {
-    //       arr.push(minArr)
-    //     }
-    //     // 将当前分类信息保存到小数组(pages)中
-    //     minArr.push(data)
-    //   })
-    //   return arr
-    // }
+       categorysArr () {
+      // 1.先从当前组件中得到所有食品分类的一维数组
+      const {categorys} = this
+      // 2.准备一个空的二维数组--categorysArr
+      const arr = []
+      // 3.准备一个小数组--pages(最大长度为8)
+      let minArr = []
+      // 4.遍历categorys得到处理后的二维数组catagorysArr
+      categorys.forEach(c => {
+        // 如果当前小数组(pages)已经满了, 创建一个新的
+        if (minArr.length === 8) {
+          minArr = []
+        }
+        // 如果minArr是空的, 将小数组(pages)保存到大数组(categorysArr)中
+        if (minArr.length === 0) {
+          arr.push(minArr)
+        }
+        // 将当前分类信息保存到小数组(pages)中
+        minArr.push(c)
+      })
+      return arr
+    }
 },
     components:{
     HeaderTop,

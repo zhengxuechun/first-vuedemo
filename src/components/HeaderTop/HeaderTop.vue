@@ -11,7 +11,6 @@
 
 <script>
 //组件接收一个属性需要在此声明
-
 export default {
     props:{
         title:String
@@ -59,5 +58,4 @@ export default {
               transform translateY(-50%)
               .header_login_text
                 color #fff
-
-</style>
+</style> 

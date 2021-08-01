@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  // import {mapActions} from 'vuex'
+  import {mapActions} from 'vuex'
   import FooterGuide from './components/FooterGuide/FooterGuide.vue'
 
   export default {
@@ -17,9 +17,9 @@
       this.$store.dispatch('getAddress')
     },
 
-    // methods: {
-    //   ...mapActions(['getAddress'])
-    // },
+    methods: {
+      ...mapActions(['getAddress'])
+    },
 
     components: {
       FooterGuide

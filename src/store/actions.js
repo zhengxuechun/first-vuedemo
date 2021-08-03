@@ -1,13 +1,15 @@
 import {
     RECEIVE_ADDRESS,
     RECEIVE_SHOPS,
-    RECEIVE_CATEGORYS
+    RECEIVE_CATEGORYS,
+    RECEIVE_USER_INFO
 } from './mutation-types'
 
 import {
     reqAddress,
     reqFoodCategorys,
-    reqShops
+    reqShops,
+    reqUserInfo
 } from '../api' //引入API接口函数
 
 export default {
@@ -45,5 +47,8 @@ export default {
       commit(RECEIVE_SHOPS, {shops})
     }
   },
-    
+  // 同步记录用户信息
+  recordUser({commit}, userInfo) {
+    commit(RECEIVE_USER_INFO, {userInfo})
+  },
 }

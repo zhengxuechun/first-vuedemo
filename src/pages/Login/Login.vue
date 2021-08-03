@@ -97,7 +97,7 @@ export default {
       const result = await reqSendCode(this.phone)//promise
       if (code===1) {
         //显示提示
-        this.showAlert(result.msg)//msg在接口文档中
+        this.showAlert(result.msg)//msg
         //停止计时
         if(this.computeTime){
           this.computeTime = 0
@@ -126,7 +126,7 @@ export default {
             return
           }
           // 发送ajax请求短信登陆
-          //result = await reqSmsLogin(phone, code)
+          result = await reqSmsLogin(phone, code)
 
         } else {// 密码登陆
           const {name, pwd, captcha} = this
@@ -144,30 +144,30 @@ export default {
             return
           }
           // 发送ajax请求密码登陆
-          //result = await reqPwdLogin({name, pwd, captcha})
+          result = await reqPwdLogin({name, pwd, captcha})
         }
 
         // 停止计时
-        // if(this.computeTime) {
-        //   this.computeTime = 0
-        //   clearInterval(this.intervalId)
-        //   this.intervalId = undefined
-        // }
+        if(this.computeTime) {
+          this.computeTime = 0
+          clearInterval(this.intervalId)
+          this.intervalId = undefined
+        }
 
         // 根据结果数据处理
-        // if(result.code===0) {
-        //   const user = result.data
-        //   // 将user保存到vuex的state
-        //   this.$store.dispatch('recordUser', user)
-        //   // 去个人中心界面
-        //   this.$router.replace('/profile')
-        // } else {
-        //   // 显示新的图片验证码
-        //   this.getCaptcha()
-        //   // 显示警告提示
-        //   const msg = result.msg
-        //   this.showAlert(msg)
-        // }
+        if(result.code===0) {
+          const user = result.data
+          // 将user保存到vuex的state
+          //this.$store.dispatch('recordUser', user)
+          // 去个人中心界面
+          this.$router.replace('/profile')
+        } else {
+          // 显示新的图片验证码
+          this.getCaptcha()
+          // 显示警告提示
+          const msg = result.msg
+          this.showAlert(msg)
+        }
       },
       // 关闭警告框
       closeTip () {

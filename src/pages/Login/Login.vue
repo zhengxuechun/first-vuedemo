@@ -39,7 +39,7 @@
                 </section>
                 <section class="login_message">
                   <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                  <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                  <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha" ref="captcha">
                 </section>
               </section>
             </div>
@@ -58,6 +58,7 @@
 
 <script>
   import AlertTip from '../../components/AlertTip/AlertTip.vue'
+  import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../api'
 export default {
   data(){
     return{
@@ -80,8 +81,9 @@ export default {
   },
   methods: {
     //异步获取短信验证码
-    getCode () {
+    async getCode () {
     if (!this.computeTime) {
+      //启动倒计时
       this.computeTime = 30
       this.intervalId  = setInterval(() => {
         this.computeTime--
@@ -90,10 +92,19 @@ export default {
         }
       }, 1000);
     }
-      //启动倒计时
 
       //发送Ajax请求(向指定手机号发送验证码短信)
-      
+      const result = await reqSendCode(this.phone)//promise
+      if (code===1) {
+        //显示提示
+        this.showAlert(result.msg)//msg在接口文档中
+        //停止计时
+        if(this.computeTime){
+          this.computeTime = 0
+          clearInterval(this.intervalId)
+          this.intervalId = undefined
+        }
+      }
     },
   showAlert(alertText) {
         this.alertShow = true
@@ -163,11 +174,11 @@ export default {
         this.alertShow = false
         this.alertText = ''
       },
-      // 获取一个新的图片验证码
-      // getCaptcha () {
-      //   // 每次指定的src要不一样
-      //   this.$refs.captcha.src = 'http://localhost:4000/captcha?time='+Date.now()
-      // }
+       //获取一个新的图片验证码
+       getCaptcha () {
+         // 每次指定的src要不一样
+         this.$refs.captcha.src = 'http://localhost:4000/captcha?time='+Date.now()
+       }
     },
 
     components: {

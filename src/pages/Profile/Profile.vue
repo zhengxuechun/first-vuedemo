@@ -1,5 +1,4 @@
 <template>
- <div>
       <section class="profile"> 
         <HeaderTop title="我的"/>
         <section class="profile-number">
@@ -76,28 +75,47 @@
           </a>
         </section>
         <section class="profile_my_order border-1px">
-          <!-- 服务中心 -->
-          <a href="javascript:" class="my_order">
+      <!-- 服务中心 -->
+      <a href="javascript:" class="my_order">
             <span>
               <i class="iconfont icon-fuwu"></i>
             </span>
-            <div class="my_order_div">
-              <span>服务中心</span>
-              <span class="my_order_icon">
+        <div class="my_order_div">
+          <span>服务中心</span>
+          <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
-              </span>
-            </div>
-          </a>
-        </section>
-      </section>
-    </div>
+          </span>
+        </div>
+      </a>
+    </section>
+
+    <section class="profile_my_order border-1px">
+      <mt-button type="danger" style="width: 100%" v-if="userInfo._id" @click="logout">退出登陆</mt-button>
+    </section>
   </section>
 </template>
 
+
+
 <script>
+import { MessageBox, Toast } from 'mint-ui'
 import HeaderTop from "../../components/HeaderTop/HeaderTop.vue"
 import {mapState} from 'vuex'
 export default {
+   methods: {
+      logout () {
+        MessageBox.confirm('确认退出吗?').then(
+          action => {
+            // 请求退出
+            this.$store.dispatch('logout')
+            Toast('登出完成')
+          },
+          action => {
+            console.log('点击了取消')
+          }
+        );
+      }
+    },
    components:{
       HeaderTop
    },

@@ -2,7 +2,7 @@
 使用mockjs提供mock数据接口
  */
 import Mock from 'mockjs'
-import data from './data.json'
+import data from './data.json' //向外引入数据放在data中
 
 // 返回goods的接口
 Mock.mock('/goods', {code:0, data: data.goods})

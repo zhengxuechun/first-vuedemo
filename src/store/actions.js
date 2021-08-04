@@ -4,6 +4,9 @@ import {
     RECEIVE_CATEGORYS,
     RECEIVE_USER_INFO,
     RESET_USER_INFO,
+    RECEIVE_GOODS,
+    RECEIVE_RATINGS,
+    RECEIVE_INFO,
 } from './mutation-types'
 
 import {
@@ -12,6 +15,9 @@ import {
     reqShops,
     reqUserInfo,
     reqLogout,
+    reqShopRatings,
+    reqShopGoods,
+    reqShopInfo,
 } from '../api' //引入API接口函数
 
 export default {
@@ -68,4 +74,29 @@ export default {
       commit(RESET_USER_INFO)
     }
   },
+  async getShopInfo ({commit}) {
+    const result = await reqShopInfo()
+    if (result.code === 0) {
+      const info = result.data
+      commit(RECEIVE_INFO, {info})
+    }
+  },
+
+  // 异步获取商家评价列表
+  async getShopRatings ({commit}) {
+    const result = await reqShopRatings()
+    if (result.code === 0) {
+      const ratings = result.data
+      commit(RECEIVE_RATINGS, {ratings})
+    }
+  },
+
+  // 异步获取商家商品列表
+  async getShopGoods ({commit}) {
+    const result = await reqShopGoods()
+    if (result.code === 0) {
+      const goods = result.data
+      commit(RECEIVE_GOODS, {goods})
+    }
+  }
 }
